@@ -1,46 +1,50 @@
-package org.example;
+package org.example.Model;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.util.*;
-public class Offer {
+public class Offer implements Comparable<Offer> {
     private int id;
     private String title;
     private String description;
 
     private int category;
-    private  List<Map<String, Object>> merchants;
-    private  String validTo;
+    private  List<Merchant> merchants;
+    private  String valid_to;
 
-    public Offer(int id, String title, String description, int category, List<Map<String, Object>> merchants, String validTo) {
+    public Offer(int id, String title, String description, int category, List<Merchant> merchants, String valid_to) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.category = category;
         this.merchants = merchants;
-        this.validTo = validTo;
+        this.valid_to = valid_to;
+    }
+    public Offer(){
+        this.id = 0;
+        this.title = "";
+        this.description = "";
+        this.category = 0;
+        this.merchants = new ArrayList<>();
+        this.valid_to = "";
+
     }
     public Offer(JsonNode offerNode){
         this.id = offerNode.get("id").asInt();
         this.title = offerNode.get("title").asText();
         this.description = offerNode.get("description").asText();
         this.category = offerNode.get("category").asInt();
-        this.validTo = offerNode.get("valid_to").asText();
+        this.valid_to = offerNode.get("valid_to").asText();
         this.merchants = new ArrayList<>();
 
         JsonNode merchantsNode = offerNode.get("merchants");
         if (merchantsNode.isArray()) {
-            for (JsonNode merchant : (ArrayNode) merchantsNode) {
-                int merchantId = merchant.get("id").asInt();
-                String name = merchant.get("name").asText();
-                double distance = merchant.get("distance").asDouble();
-                Map<String, Object> merchantMap = Map.of(
-                        "id", merchantId,
-                        "name", name,
-                        "distance", distance
-                );
-                this.merchants.add(merchantMap);
+            for (JsonNode merchantNode : merchantsNode) {
+                int merchantId = merchantNode.get("id").asInt();
+                String name = merchantNode.get("name").asText();
+                double distance = merchantNode.get("distance").asDouble();
+                Merchant merchant = new Merchant(merchantId,name,distance);
+                this.merchants.add(merchant);
             }
         }
     }
@@ -77,19 +81,24 @@ public class Offer {
         this.category = category;
     }
 
-    public List<Map<String, Object>> getMerchants() {
+    public List<Merchant> getMerchants() {
         return merchants;
     }
 
-    public void setMerchants(List<Map<String, Object>> merchants) {
+    public void setMerchants(List<Merchant> merchants) {
         this.merchants = merchants;
     }
 
-    public String getValidTo() {
-        return validTo;
+    public String getValid_to() {
+        return valid_to;
     }
 
-    public void setValidTo(String validTo) {
-        this.validTo = validTo;
+    public void setValid_to(String valid_to) {
+        this.valid_to = valid_to;
+    }
+
+    @Override
+    public int compareTo(Offer compareOffer) {
+        return 0;
     }
 }
