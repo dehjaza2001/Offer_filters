@@ -22,8 +22,7 @@ Java JDK (version 1.11.0 or later)
 ### Run the .jar file
 + ``` cd out/artifacts/Ascenda_Luong_Thien_Tri_jar ```
 + Provide the input.json file with your data
-+ Run the command _java -jar Ascenda_Luong_Thien_Tri.jar <input.json> <checkInDate>_ . For example
-
- ``` java -jar Ascenda_Luong_Thien_Tri.jar input.json 2019-12-25 ```
++ Run the command java -jar Ascenda_Luong_Thien_Tri.jar <input.json> <checkInDate>
++ . For example ``` java -jar Ascenda_Luong_Thien_Tri.jar input.json 2019-12-25 ```
 + Then the output.json file will be in the same file as .jar file
   
